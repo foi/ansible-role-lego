@@ -1,5 +1,3 @@
-# lego-ansible-role
-
 lego
 =========
 
