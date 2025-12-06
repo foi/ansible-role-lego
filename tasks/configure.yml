@@ -1,0 +1,32 @@
+# code: language=ansible
+# vim: set filetype=yaml.ansible :
+---
+- name: "Compose service name for {{ lego_service }}"
+  ansible.builtin.set_fact:
+    lego_service_name: "{% if lego_service_prefix | length > 0 %}{{ lego_service_prefix }}{{ lego_service_name_join_char }}{% endif %}{{ lego_service.name }}{% if lego_service_suffix | length > 0 %}{{ lego_service_name_join_char }}{{ lego_service_suffix }}{% endif %}" # noqa: yaml[line-length]
+
+- name: "Render systemd service {{ lego_service_name }}"
+  ansible.builtin.template:
+    src: lego.service.ini.j2
+    dest: "{{ lego_systemd_services_path }}/{{ lego_service_name }}.service"
+    mode: '0644'
+    validate: "systemd-analyze verify %s"
+
+- name: "Render systemd timer {{ lego_service_name }}"
+  ansible.builtin.template:
+    src: lego.timer.ini.j2
+    dest: "{{ lego_systemd_services_path }}/{{ lego_service_name }}.timer"
+    mode: '0644'
+    validate: "systemd-analyze verify %s"
+
+- name: "Start timer {{ lego_service_name }}"
+  ansible.builtin.systemd:
+    name: "{{ lego_service_name }}.timer"
+    state: started
+    daemon_reload: true
+
+- name: "Enable timer {{ lego_service_name }}"
+  ansible.builtin.systemd:
+    name: "{{ lego_service_name }}.timer"
+    enabled: true
+    daemon_reload: true

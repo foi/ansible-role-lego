@@ -1,0 +1,36 @@
+# code: language=ansible
+# vim: set filetype=yaml.ansible :
+---
+- name: "Install : create system user {{ lego_user }}"
+  ansible.builtin.user:
+    name: "{{ lego_user }}"
+    system: true
+    shell: "{{ '/usr/sbin/nologin' if ansible_facts['os_family'] == 'RedHat' else '/sbin/nologin' }}"
+    createhome: false
+
+- name: "Install : create lego conf dir"
+  ansible.builtin.file:
+    path: "{{ lego_conf_path }}"
+    owner: "{{ lego_user }}"
+    group: "{{ lego_user }}"
+    mode: '0755'
+    state: directory
+
+- name: "Install : get lego"
+  ansible.builtin.get_url:
+    url: "https://github.com/go-acme/lego/releases/download/{{ lego_version }}/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz" # noqa: yaml[line-length]
+    dest: "/tmp/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz"
+    force: true
+    use_proxy: true
+    validate_certs: true
+    mode: "u=rw,go=r"
+
+- name: "Install : unpack binary"
+  ansible.builtin.unarchive:
+    src: "/tmp/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz"
+    dest: "{{ lego_bin_dir }}"
+    remote_src: true
+    include:
+      - lego
+    owner: root
+    group: root

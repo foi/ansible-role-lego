@@ -1,0 +1,26 @@
+# code: language=ansible
+# vim: set filetype=yaml.ansible :
+---
+- name: Install
+  tags:
+    - lego-install
+  ansible.builtin.import_tasks:
+    file: install.yml
+
+- name: Configure
+  when:
+    - lego_services | length > 0
+    - lego_email | length > 0
+  tags:
+    - lego-configure
+    - lego-install
+  ansible.builtin.include_tasks:
+    file: configure.yml
+    apply:
+      tags:
+        - lego-configure
+        - lego-install
+  loop: "{{ lego_services }}"
+  loop_control:
+    loop_var: lego_service
+    label: "{{ lego_service.name }}"

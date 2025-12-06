@@ -1,0 +1,21 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description={{ lego_service.name }} lego service
+
+{% for unit_option in lego_unit_options %}
+{{ unit_option }}
+{% endfor %}
+
+[Service]
+User={{ lego_user }}
+ExecStart={{ lego_bin_dir }}/lego {{ lego_service.command_options | join(' ')}}
+Type=oneshot
+{% for opt in lego_default_service_options %}
+{{ opt }}
+{% endfor %}
+{% for opt in lego_service.service_options %}
+{{ opt }}
+{% endfor %}
+
+[Install]
+WantedBy=multi-user.target

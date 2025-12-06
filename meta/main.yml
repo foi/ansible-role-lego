@@ -1,0 +1,27 @@
+galaxy_info:
+  role_name: lego
+  author: foi
+  description: systemd lego role
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+
+  license: MIT
+
+  min_ansible_version: "2.16"
+
+  galaxy_tags:
+    - lego
+    - letsencrypt
+    - ssl
+    - https
+    - encryption
+    - web
+dependencies: []

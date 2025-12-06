@@ -1,0 +1,22 @@
+# code: language=ansible
+# vim: set filetype=yaml.ansible :
+---
+lego_version: "v4.29.0"
+lego_arch: amd64
+lego_services: []
+lego_conf_path: /etc/lego
+lego_user: lego
+lego_bin_dir: "/usr/local/bin"
+lego_email: ""
+lego_default_service_options:
+  - ProtectSystem=full
+  - "ReadWriteDirectories={{ lego_conf_path }}"
+  - Environment="LEGO_PATH={{ lego_conf_path }}"
+  - Environment="LEGO_EMAIL={{ lego_email }}"
+lego_service_suffix: lego
+lego_service_prefix: ""
+lego_service_name_join_char: '-'
+lego_systemd_services_path: "/etc/systemd/system"
+lego_unit_options:
+  - Wants=network-online.target
+  - After=network.target network-online.target

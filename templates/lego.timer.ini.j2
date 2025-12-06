@@ -1,0 +1,9 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description={{ lego_service.name }} timer
+
+[Timer]
+OnCalendar={{ lego_service.on_calendar | default('weekly') }}
+
+[Install]
+WantedBy=timers.target
