@@ -8,7 +8,7 @@ Highly customizable ansible systemd lego role
 Role Variables
 --------------
 role defaults:
-```
+```yml
 lego_version: "v4.29.0"
 lego_arch: amd64
 lego_services: []
@@ -31,19 +31,19 @@ lego_unit_options:
 ```
 
 lego_services structure:
-```
+```yaml
 lego_services:
   - name: service_name
-  service_options:
-    - any lines in systemd's [Service]
-  on_calendar: systemd timer OnCalendar format (default is weekly)
-  command_options:
-    - list of lego command args
+    service_options:
+      - any lines in systemd's [Service]
+    on_calendar: systemd timer OnCalendar format (default is weekly)
+    command_options:
+      - list of lego command args
 ```
 Example Playbook
 ----------------
-In this example we give pemissions for reading certs and keys. You can use lego's hook instead of `ExecStartPost` but is has [some issues](https://github.com/go-acme/lego/issues/1468).
-```
+In this example we give pemissions for reading certs and keys for everyone. You can use lego's hook instead of `ExecStartPost` but is has [some issues](https://github.com/go-acme/lego/issues/1468).
+```yml
 # playbook.yml
     - hosts: servers
       roles:
