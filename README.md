@@ -42,10 +42,13 @@ Example Playbook
 ----------------
 In this example we give pemissions for reading certs and keys for everyone. You can use lego's hook instead of `ExecStartPost` but is has [some issues](https://github.com/go-acme/lego/issues/1468).
 ```yml
+# inventory
+[servers]
+yourhost
 # playbook.yml
-    - hosts: servers
-      roles:
-         - role: foi.lego
+- hosts: servers
+  roles:
+    - role: foi.lego
 # host_vars/lego_host.yml
 lego_email: me@example.com
 lego_conf_path: /etc/lego
