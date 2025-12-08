@@ -16,21 +16,48 @@
     mode: '0755'
     state: directory
 
-- name: "Install : get lego"
-  ansible.builtin.get_url:
-    url: "https://github.com/go-acme/lego/releases/download/{{ lego_version }}/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz" # noqa: yaml[line-length]
-    dest: "/tmp/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz"
-    force: true
-    use_proxy: true
-    validate_certs: true
-    mode: "u=rw,go=r"
+- name: "Install : create lego conf dir"
+  ansible.builtin.file:
+    path: "{{ lego_conf_path }}"
+    owner: "{{ lego_user }}"
+    group: "{{ lego_user }}"
+    mode: '0755'
+    state: directory
 
-- name: "Install : unpack binary"
-  ansible.builtin.unarchive:
-    src: "/tmp/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz"
-    dest: "{{ lego_bin_dir }}"
-    remote_src: true
-    include:
-      - lego
-    owner: root
-    group: root
+- name: "Install : does lego binary exist"
+  ansible.builtin.stat:
+    path: "{{ lego_bin_dir }}/lego"
+  register: lego_bin
+
+- name: "Install : check lego version"
+  when:
+    - lego_bin.stat.exists
+  ansible.builtin.command:
+    cmd: "{{ lego_bin_dir }}/lego -v"
+  register: lego_version_result
+  changed_when: false
+
+- name: "Install : lego"
+  when: >
+    (not lego_bin.stat.exists) or
+    (lego_version | replace('v', '')) not in lego_version_result.stdout
+  block:
+
+    - name: "Install : get lego"
+      ansible.builtin.get_url:
+        url: "https://github.com/go-acme/lego/releases/download/{{ lego_version }}/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz" # noqa: yaml[line-length]
+        dest: "/tmp/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz"
+        force: true
+        use_proxy: true
+        validate_certs: true
+        mode: "u=rw,go=r"
+
+    - name: "Install : unpack binary"
+      ansible.builtin.unarchive:
+        src: "/tmp/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz"
+        dest: "{{ lego_bin_dir }}"
+        remote_src: true
+        include:
+          - lego
+        owner: root
+        group: root
