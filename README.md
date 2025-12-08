@@ -3,6 +3,11 @@ lego
 
 Highly customizable ansible systemd lego role
 
+Install
+--------------
+
+`ansible-galaxy role install foi.lego`
+
 Role Variables
 --------------
 role defaults:
