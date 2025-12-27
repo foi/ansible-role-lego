@@ -8,6 +8,15 @@ Install
 
 `ansible-galaxy role install foi.lego`
 
+or add it in `requirements.yml`
+
+```
+roles:
+  - name: foi.lego
+```
+
+and run `ansible-galaxy install -r requirements.yml`
+
 Role Variables
 --------------
 role defaults:
