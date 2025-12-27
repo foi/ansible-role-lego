@@ -12,7 +12,7 @@ Role Variables
 --------------
 role defaults:
 ```yml
-lego_version: "v4.29.0"
+lego_version: "v4.30.1"
 lego_arch: amd64
 lego_services: []
 lego_conf_path: /etc/lego
@@ -23,7 +23,7 @@ lego_default_service_options:
   - ProtectSystem=full
   - "ReadWriteDirectories={{ lego_conf_path }}"
   - Environment="LEGO_PATH={{ lego_conf_path }}"
-  - Environment="LEGO_EMAIL={{ lego_email }}"
+#  - Environment="LEGO_EMAIL={{ lego_email }}" # email is optional
 lego_service_suffix: lego
 lego_service_prefix: ""
 lego_service_name_join_char: '-'
@@ -55,7 +55,6 @@ yourhost
   roles:
     - role: foi.lego
 # host_vars/lego_host.yml
-lego_email: me@example.com
 lego_conf_path: /etc/lego
 lego_services:
   - name: your-domain-com
