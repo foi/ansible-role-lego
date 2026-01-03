@@ -3,6 +3,15 @@ lego
 
 Highly customizable ansible systemd lego role
 
+<img src="https://github.com/foi/ansible-role-lego/actions/workflows/ci.yml/badge.svg?branch=main">
+
+
+Compatibility
+--------------
+
+pyhton: 3.11, 3.12, 3.13
+ansible: 11, 12, 13
+
 Install
 --------------
 

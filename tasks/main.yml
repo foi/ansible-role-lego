@@ -10,7 +10,6 @@
 - name: Configure
   when:
     - lego_services | length > 0
-    - lego_email | length > 0
   tags:
     - lego-configure
     - lego-install
