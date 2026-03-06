@@ -30,7 +30,7 @@ Role Variables
 --------------
 role defaults:
 ```yml
-lego_version: "v4.30.1"
+lego_version: "v4.32.0"
 lego_arch: amd64
 lego_services: []
 lego_conf_path: /etc/lego
