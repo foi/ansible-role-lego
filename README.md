@@ -9,7 +9,7 @@ Highly customizable ansible systemd lego role
 Compatibility
 --------------
 
-pyhton: 3.11, 3.12, 3.13
+python: 3.11, 3.12, 3.13
 ansible: 11, 12, 13
 
 Install
