@@ -78,8 +78,10 @@ lego_services:
   - name: your-domain-com
     service_options:
       - 'Environment=CLOUDFLARE_DNS_API_TOKEN={{ yout-cloudflare_api_token }}'
-      - ExecStartPost=/usr/bin/bash -c 'find {{ lego_conf_path }} -type f \( -name "*.key" -o -name "*.crt" \) -exec chmod 644 {} \;'
-      - ExecStartPost=/usr/bin/bash -c 'chmod 755 {{ lego_conf_path }}'
+      - ExecStartPost=/bin/sh -c 'chmod 644 {{ lego_conf_path }}/certificates/*.crt'
+      - ExecStartPost=/bin/sh -c 'chmod 644 {{ lego_conf_path }}/certificates/*.key'
+      - ExecStartPost=/bin/sh -c 'chmod 755 {{ lego_conf_path }}'
+      - ExecStartPost=/bin/sh -c 'chmod 755 {{ lego_conf_path }}/certificates'
     on_calendar: weekly
     command_options:
       - --accept-tos
