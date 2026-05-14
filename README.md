@@ -84,9 +84,11 @@ lego_services:
       - ExecStartPost=/bin/sh -c 'chmod 755 {{ lego_conf_path }}/certificates'
     on_calendar: weekly
     command_options:
+      - run
       - --accept-tos
       - --dns cloudflare
-      - -d your.domain.com run
+      - --dns.resolvers 1.1.1.1
+      - -d your.domain.com
 
 ```
 License
