@@ -10,7 +10,7 @@ Compatibility
 --------------
 
 python: 3.11, 3.12, 3.13
-ansible: 11, 12, 13
+ansible: 11, 12, 13, 14
 
 Install
 --------------
@@ -30,7 +30,7 @@ Role Variables
 --------------
 role defaults:
 ```yml
-lego_version: "v5.2.2"
+lego_version: "v5.3.1"
 lego_arch: amd64
 lego_services: []
 lego_conf_path: /etc/lego

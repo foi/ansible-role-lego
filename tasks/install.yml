@@ -45,7 +45,7 @@
 
     - name: "Install : get lego"
       ansible.builtin.get_url:
-        url: "https://github.com/go-acme/lego/releases/download/{{ lego_version }}/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz" # noqa: yaml[line-length]
+        url: "https://github.com/go-acme/lego/releases/download/{{ lego_version }}/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz"  # noqa: yaml[line-length]
         dest: "/tmp/lego_{{ lego_version }}_linux_{{ lego_arch }}.tar.gz"
         force: true
         use_proxy: true

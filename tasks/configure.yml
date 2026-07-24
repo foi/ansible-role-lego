@@ -3,7 +3,7 @@
 ---
 - name: "Compose service name for {{ lego_service }}"
   ansible.builtin.set_fact:
-    lego_service_name: "{% if lego_service_prefix | length > 0 %}{{ lego_service_prefix }}{{ lego_service_name_join_char }}{% endif %}{{ lego_service.name }}{% if lego_service_suffix | length > 0 %}{{ lego_service_name_join_char }}{{ lego_service_suffix }}{% endif %}" # noqa: yaml[line-length]
+    lego_service_name: "{% if lego_service_prefix | length > 0 %}{{ lego_service_prefix }}{{ lego_service_name_join_char }}{% endif %}{{ lego_service.name }}{% if lego_service_suffix | length > 0 %}{{ lego_service_name_join_char }}{{ lego_service_suffix }}{% endif %}"  # noqa: yaml[line-length]
 
 - name: "Render systemd service {{ lego_service_name }}"
   ansible.builtin.template:
